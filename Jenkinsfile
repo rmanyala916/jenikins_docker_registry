@@ -51,11 +51,12 @@ node{
 
 stage name:'Deploy to staging', concurrency:1
     node {
-                
+        def buildID
+        buildID = env.BUILD_NUMBER        
         dir('BuildQuality'){
         sh 'sudo docker-compose build'
-        sh 'sudo docker tag buildquality_tomcat localhost:5000/buildquality_tomcat'
-        sh 'sudo docker push localhost:5000/buildquality_tomcat'
+        sh "sudo docker tag buildquality_tomcat localhost:5000/buildquality_tomcat:'${buildID}' "
+        //sh 'sudo docker push localhost:5000/buildquality_tomcat'
     }
                 
 }
