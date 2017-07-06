@@ -53,7 +53,9 @@ stage name:'Deploy to staging', concurrency:1
     node {
                 
         dir('BuildQuality'){
-        sh 'sudo docker-compose up -d --build'
+        sh 'sudo docker-compose build'
+        sh 'sudo docker tag buildquality_tomcat localhost:5000/buildquality_tomcat'
+        sh 'sudo docker push localhost:5000/buildquality_tomcat'
     }
                 
 }
@@ -77,12 +79,12 @@ stage name:'Deploy to staging', concurrency:1
 
 // }
 
-stage name:'Shutdown staging'
-    node {
+// stage name:'Shutdown staging'
+//     node {
                
-        dir('BuildQuality'){
-        sh 'sudo docker-compose stop'
-    }
+//         dir('BuildQuality'){
+//         sh 'sudo docker-compose stop'
+//     }
                 
-}
+// }
         
